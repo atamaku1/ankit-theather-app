@@ -78,6 +78,9 @@ var moviesPage = function (movies) {
        </banner>
        <list>
           <section>
+             <listItemLockup>
+                <title>All Movies</title>
+                <decorationLabel>6</decorationLabel>
                 <relatedContent>
                    <grid>
                       <section>
@@ -85,6 +88,7 @@ var moviesPage = function (movies) {
                       </section>
                    </grid>
                 </relatedContent>
+             </listItemLockup>
           </section>
        </list>
     </catalogTemplate>
