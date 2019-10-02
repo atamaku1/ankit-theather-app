@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pretest":"node index.js",
     "test": "echo \"no tests\"",
     "deployApplication":"aws s3 cp application.js s3://atamakuwala.com --acl public-read",
     "deployMetadata":"aws s3 cp metadata.json s3://atamakuwala.com --acl public-read",
