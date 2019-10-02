@@ -5,4 +5,3 @@ before_install:
   - pip install --user awscli
 script:
   - node index.js
-  - npm run deploy
