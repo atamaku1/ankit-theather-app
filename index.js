@@ -1,8 +1,9 @@
 const aws = require("aws-sdk");
-const S3 = new aws.S3();
 const fs = require('fs');
 var ptn = require('parse-torrent-name');
 const axios = require('axios');
+
+const S3 = new aws.S3();
 
 const getMovieDetails = async (movieFiles)=> {
     return await Promise.all(
@@ -14,22 +15,19 @@ const getMovieDetails = async (movieFiles)=> {
             const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=fe011c64d28d70016c2635c0c27da375&language=en-US&query=${title}&page=1&include_adult=true&year=${year}`);
             const moviedbDetails = res.data;
             movie.image = `https://image.tmdb.org/t/p/w500/${moviedbDetails.results[0].poster_path}`;
-            //console.log(moviedbDetails.results[0]);
             return movie;
         })
     )
 };
 
-exports.handler = async ()=> {
+const test = async ()=> {
     try{
         const bucketFiles = await S3.listObjects({Bucket: "atamakuwala.com"}).promise();
         const movieFiles = bucketFiles.Contents.filter((file)=>{
             return (/\.(mp4|avi)$/i).test(file.Key)
         });
         const movieDetails = await getMovieDetails(movieFiles);
-        //console.log(test);
-        fs.writeFileSync("metadata.json", JSON.stringify(movieDetails));
-        S3.upload({Bucket: 'atamakuwala.com', Key: 'metadata.json', Body: fs.createReadStream("./metadata.json"), ACL: "public-read"}, (err, data)=>{
+        S3.putObject({Bucket: 'atamakuwala.com', Key: 'metadata.json', Body: JSON.stringify(movieDetails), ACL: "public-read"}, (err, data)=>{
             if(err){
                 console.error(err);
                 process.exit(1);
@@ -46,10 +44,14 @@ exports.handler = async ()=> {
             else{
                 console.log("application file uploaded successfully", data);
             }
-        })
+        });
+        return "success";
     }
     catch(err){
         console.error(err);
         process.exit(1);
+        return "failed"
     }
 }
+
+test();
