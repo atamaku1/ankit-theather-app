@@ -80,7 +80,7 @@ var moviesPage = function (movies) {
           <section>
              <listItemLockup>
                 <title>All Movies</title>
-                <decorationLabel>6</decorationLabel>
+                <decorationLabel>${movies.length}</decorationLabel>
                 <relatedContent>
                    <grid>
                       <section>
