@@ -14,7 +14,12 @@ const getMovieDetails = async (movieFiles)=> {
             movie.year = year;
             const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=fe011c64d28d70016c2635c0c27da375&language=en-US&query=${title}&page=1&include_adult=true&year=${year}`);
             const moviedbDetails = res.data;
-            movie.image = `https://image.tmdb.org/t/p/w500/${moviedbDetails.results[0].poster_path}`;
+            if(moviedbDetails.results.length){
+                movie.image = `https://image.tmdb.org/t/p/w500/${moviedbDetails.results[0].poster_path}`;
+            }
+            else{
+                movie.image = `https://s3.us-east-2.amazonaws.com/atamakuwala.com/image404.png`;
+            }
             return movie;
         })
     )
