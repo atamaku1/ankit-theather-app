@@ -4,23 +4,6 @@ const fs = require('fs');
 var ptn = require('parse-torrent-name');
 const axios = require('axios');
 
-
-const test = async ()=> {
-    try{
-        const bucketFiles = await S3.listObjects({Bucket: "atamakuwala.com"}).promise();
-        const movieFiles = bucketFiles.Contents.filter((file)=>{
-            return (/\.(mp4|avi)$/i).test(file.Key)
-        });
-        const movieDetails = await getMovieDetails(movieFiles);
-        //console.log(test);
-        fs.writeFileSync("metadata.json", JSON.stringify(movieDetails));
-    }
-    catch(err){
-        console.error(err);
-        process.exit(1);
-    }
-}
-
 const getMovieDetails = async (movieFiles)=> {
     return await Promise.all(
         movieFiles.map( async (movie, index) => {
@@ -36,4 +19,37 @@ const getMovieDetails = async (movieFiles)=> {
         })
     )
 };
-test();
+
+exports.handler = async ()=> {
+    try{
+        const bucketFiles = await S3.listObjects({Bucket: "atamakuwala.com"}).promise();
+        const movieFiles = bucketFiles.Contents.filter((file)=>{
+            return (/\.(mp4|avi)$/i).test(file.Key)
+        });
+        const movieDetails = await getMovieDetails(movieFiles);
+        //console.log(test);
+        fs.writeFileSync("metadata.json", JSON.stringify(movieDetails));
+        S3.upload({Bucket: 'atamakuwala.com', Key: 'metadata.json', Body: fs.createReadStream("./metadata.json"), ACL: "public-read"}, (err, data)=>{
+            if(err){
+                console.error(err);
+                process.exit(1);
+            }
+            else{
+                console.log("metadata uploaded successfully", data);
+            }
+        });
+        S3.upload({Bucket: 'atamakuwala.com', Key: 'application.js', Body: fs.createReadStream("./application.js"), ACL: "public-read"}, (err, data)=>{
+            if(err){
+                console.error(err);
+                process.exit(1);
+            }
+            else{
+                console.log("application file uploaded successfully", data);
+            }
+        })
+    }
+    catch(err){
+        console.error(err);
+        process.exit(1);
+    }
+}
