@@ -16,7 +16,8 @@ const test = async ()=> {
         fs.writeFileSync("metadata.json", JSON.stringify(movieDetails));
     }
     catch(err){
-        console.log(err);
+        console.error(err);
+        process.exit(1);
     }
 }
 

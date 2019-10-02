@@ -1,3 +1,12 @@
 language: node_js
 node_js:
-  - "10"
+- '10'
+deploy:
+  provider: s3
+  access_key_id: AKIAILRSUWGIICRLSR2Q
+  secret_access_key:
+    secure: rDPdc6LDvl5fV9HzxlXx2a+lleq4trpLsBG/4vpOxF9idAUWxtHPouVHO34/zCHLNj5HEMQO5Dxe6wuIoNWLvAz3/bScCKECe77nBdt4iu64/Kl0dj/vcdGrOOsNp90WMlWk5yjy0lNh5BmGATLbfWJL6vIMNUeXAyinfb3jtxiD85EE0HowibhYeGRSJax6jJb/IX3gzTcY8s2zr7KioJ3JYnUQUzP5MkJGyF6ENnl9S0yzpiNQV5tIGUT+TW6PxG6mnLDt/OM5xg3jhEvFMnl1jC9zoUMbUy3/l8WvWWb0lpT7+f9ptc19StO2fAyZBERuluyJlkEN/8QaAM0l++aAoANowAVN9lIgYqabhbzucYQoPa32mH08BSF953Tja7jWfmPYv9+QfC3+P5FgFsOPF6LgFwrJl75Da/ykr+sn9bxx71CpN6pYiUNeOk6qkE3ScMrJOQR/Nh6v8hUj1FiOshd1x+mlOrUL75eTT1KNiHXBfl3pu00ZLsPuLdl/cSnSjWqrab2Br7qh7MsWt5moTHh1WBeCMhvBFMu15DED19bgT0yTjQOLF8lQDWzqGvrHL/xjKl3ZDS6e9Vyn6Ppd+nclAARrCkkD/CqbBAreR7TvLZYQ6olcmMgjPipyRR8Bo6h505v3YIaSocdInPhheBrTBEuatBInBoT64zc=
+  bucket: atamakuwala.com
+  acl: public_read
+  on:
+    repo: atamaku1/ankit-theather-app
