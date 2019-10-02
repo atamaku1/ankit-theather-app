@@ -78,11 +78,13 @@ var moviesPage = function (movies) {
        </banner>
        <list>
           <section>
-            <grid>
-                <section>
-                    ${moviesMarkup}
-                </section>
-            </grid>
+                <relatedContent>
+                   <grid>
+                      <section>
+                            ${moviesMarkup}
+                      </section>
+                   </grid>
+                </relatedContent>
           </section>
        </list>
     </catalogTemplate>
